@@ -16,7 +16,7 @@ import android.view.Display;
 import android.view.View;
 
 public class Util {
-    public static final String DYNAMICACTION = "com.example.usbdisconnect";
+    public static final String DYNAMICACTION = "com.qi.carrecord.receiver.usbdisconnect";
     public static final int page = 0x5;
     
     public static Bitmap getVideoThumbnail(String videoPath, int kind) {

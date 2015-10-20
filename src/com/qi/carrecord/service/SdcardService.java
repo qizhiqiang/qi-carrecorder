@@ -14,7 +14,7 @@ import android.os.StatFs;
 public class SdcardService extends Service {
 
     private static final int SETINTERVAL = 0x2710;
-    private Handler mHandler;
+    private Handler mHandler = new Handler();
     private MediaDao mediaDaoImpl;
     
     public IBinder onBind(Intent arg0) {

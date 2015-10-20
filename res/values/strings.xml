@@ -7,6 +7,7 @@
     <string name="setting_fenduan">分段录制</string>
     <string name="setting_open">打开APP自动进入录像</string>
     <string name="setting_usb">USB监听</string>
+    <string name="setting_resolution">视频分辨率</string>    
     <string name="setting_auto">关于行车记录仪</string>
     <string name="title_about">关于</string>
     <string name="setting_exit">退出</string>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spingarr">
+     <item>QVGA 文件大小22M/分</item> 
+    <item>480P 文件大小16M/分</item> 
+    <item>720P 文件大小102M/分</item>
+    <item>1080P 文件大小142M/分</item>           
+    </string-array>    
+</resources>

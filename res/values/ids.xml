@@ -43,6 +43,8 @@
     <item type="id" name="setting_open_icon">false</item>
     <item type="id" name="setting_usb">false</item>
     <item type="id" name="setting_usb_icon">false</item>
+    <item type="id" name="setting_resolution">false</item>
+    <item type="id" name="setting_resolution_text">false</item>        
     <item type="id" name="setting_auto">false</item>
     <item type="id" name="setting_exit">false</item>
     <item type="id" name="title_hei">false</item>

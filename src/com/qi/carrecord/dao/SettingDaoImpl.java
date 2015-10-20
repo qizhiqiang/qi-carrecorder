@@ -30,6 +30,7 @@ public class SettingDaoImpl implements SettingDao {
             setting.setSplit_video(cursor.getInt(0x2));
             setting.setStart_video(cursor.getInt(0x3));
             setting.setUsb_state(cursor.getInt(0x4));
+            setting.setResolution_state(cursor.getInt(0x5));
             cursor.close();
         }
         db.close();
@@ -37,8 +38,17 @@ public class SettingDaoImpl implements SettingDao {
     }
     
     public int update(SettingModel setting) {
-        // :( Parsing error. Please contact me.
-    	return 0;
+        db = record.getReadableDatabase();
+        ContentValues values = new ContentValues(); 
+        values.put("recording", Integer.valueOf(setting.getRecording()));
+        values.put("split_video", Integer.valueOf(setting.getSplit_video())); 
+        values.put("start_video", Integer.valueOf(setting.getStart_video())); 
+        values.put("usb_state", Integer.valueOf(setting.getUsb_state()));  
+        values.put("resolution_state", Integer.valueOf(setting.getResolution_state()));
+        String[] args = new String[]{(new StringBuilder(String.valueOf(setting.getId()))).toString()};
+        int count = db.update("T_B_SETTING", values,"id = ?", args);
+        db.close();
+    	return count;
     }
     
     public int add(SettingModel setting) {
@@ -48,6 +58,7 @@ public class SettingDaoImpl implements SettingDao {
         values.put("split_video", Integer.valueOf(setting.getSplit_video()));
         values.put("start_video", Integer.valueOf(setting.getStart_video()));
         values.put("usb_state", Integer.valueOf(setting.getUsb_state()));
+        values.put("resolution_state", Integer.valueOf(setting.getResolution_state()));        
         int count = (int)db.insert("T_B_SETTING", null, values);
         db.close();
         return count;

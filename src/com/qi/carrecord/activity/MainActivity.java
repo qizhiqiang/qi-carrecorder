@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				Bundle bundle = new Bundle();
 				bundle.putString("msg", "open");
 				intent.putExtras(bundle);
-				MainActivity.this.getApplicationContext().startActivity(intent);
+				MainActivity.this.startActivity(intent);
 			}
         	
         };        
@@ -138,9 +138,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     
     public void Dialog() {
         AlertDialog.Builder Builder1 = new AlertDialog.Builder(this);
-        Builder1 = Builder1.setTitle("\u5f00\u53d1\u8005\u63d0\u793a");
-        Builder1 = Builder1.setMessage("chanpin");
-        Builder1.setPositiveButton("\u786e\u5b9a", null).show();
+        Builder1 = Builder1.setTitle("开发者提示");
+        Builder1 = Builder1.setMessage("qizhiqiang");
+        Builder1.setPositiveButton("确定", null).show();
     }
     
     protected void onResume() {

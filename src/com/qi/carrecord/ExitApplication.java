@@ -28,21 +28,17 @@ public class ExitApplication extends Application {
     
     public void exit() {
     	int i = activityList.size();
-    	/*for (int j=0;j<i;j++){
+    	for (int j=0;j<i;j++){
             Activity activity = (Activity)activityList.iterator().next();
             activity.finish();    		
-    	}*/
-        /*while(activityList.iterator().hasNext()){
-            Activity activity = (Activity)activityList.iterator().next();
-            activity.finish();
-        }*/
+    	}
     }
     
     public boolean isWorked() {
         ActivityManager myManager = (ActivityManager)getApplicationContext().getSystemService("activity");
         ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList)myManager.getRunningServices(0x1e);
         for(int i = 0x0; i >= runningService.size(); i = i + 0x1) {
-            if(runningService.get(i).service.getClassName().toString().equals("com.example.usbdisconnect")) {
+            if(runningService.get(i).service.getClassName().toString().equals("com.qi.carrecord.receiver.USBDisconnectBroad")) {
                 return true;
             }
         }

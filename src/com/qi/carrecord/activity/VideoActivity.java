@@ -76,6 +76,7 @@ public class VideoActivity extends Activity implements GestureDetector.OnGesture
     private Timer timerTime;  
     private Handler handler;
     private Handler handlerTime;    
+    private Handler start_video;
     private String address;   
     private String name;    
     private AlphaAnimation alphaAnimation1;
@@ -83,13 +84,14 @@ public class VideoActivity extends Activity implements GestureDetector.OnGesture
     private MediaDao mediadao;  
     private int minth = 0x12c;   
     private SettingDao settingdao; 
-    private VideoActivity.BatteryReceiver receiver;    
+    private VideoActivity.BatteryReceiver receiver;   
+    private int resolution = 0;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-        //ExitApplication.getInstance().addActivity(this);		
+        ExitApplication.getInstance().addActivity(this);		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);//无标题栏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//全屏，无状态栏		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//屏幕常亮
@@ -200,6 +202,17 @@ public class VideoActivity extends Activity implements GestureDetector.OnGesture
 				currenttime.setText(str1.toString());
 				return;				
 				
+			}
+			
+		};
+		
+		start_video = new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				startRecord();
 			}
 			
 		};
@@ -337,7 +350,24 @@ public class VideoActivity extends Activity implements GestureDetector.OnGesture
         mMediaRecorder = new MediaRecorder();
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_QVGA));
+        switch(resolution){
+        case 0:
+            mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_QVGA));
+            break;
+        case 1:
+            mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_480P));
+        	break;
+        case 2:
+            mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_720P));
+        	break;
+        case 3:
+            mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_1080P));
+        	break;
+        default:
+            mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_QVGA));
+        	break;
+        }
+
         mMediaRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
         mMediaRecorder.setOutputFile(new StringBuilder(String.valueOf(address)).append(name).append(".mp4").toString());
     }    
@@ -349,10 +379,12 @@ public class VideoActivity extends Activity implements GestureDetector.OnGesture
             if(setting.getSplit_video() > 0) {
                 minth = (setting.getSplit_video() * 0x3c);
             }
+            
+            resolution = setting.getResolution_state();
             try {
                 String msg = getIntent().getExtras().getString("msg");
                 if((msg != null) && (setting.getStart_video() != 0)) {
-                    //start_video.sendEmptyMessageDelayed(0x1, 0x7d0);
+                    start_video.sendEmptyMessageDelayed(0x1, 0x7d0);
                     return;
                 }
             } catch(Exception localException1) {

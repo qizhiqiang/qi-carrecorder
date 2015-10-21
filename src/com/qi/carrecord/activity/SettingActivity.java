@@ -14,10 +14,12 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -140,16 +142,18 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         resolution_text.setSelection(pos, true);
         if(sett.getUsb_state() == 0) {
             usb_icon.setBackgroundResource(R.drawable.switch_close);
-            if(isWorked()) {
+            //if(isWorked()) {
+            	Log.e("qizhiqiang","close USBService");
                 Intent close = new Intent(getApplicationContext(), USBService.class);
                 stopService(close);
-            }
+            //}
             return;
         }
         usb_icon.setBackgroundResource(R.drawable.switch_open);
         if(!isWorked()) {
+        	Log.e("qizhiqiang","start USBService");
             Intent intent = new Intent(getApplicationContext(), USBService.class);
-            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startService(intent);
         }
     }
@@ -319,14 +323,13 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     }    
     
     public boolean isWorked() {
-        ActivityManager myManager = (ActivityManager)getApplicationContext().getSystemService("activity");
-        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList)myManager.getRunningServices(0x1e);
+        ActivityManager myManager = (ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList)myManager.getRunningServices(30);
         for(int i = 0; i < runningService.size(); i++) {
-        	String temp = ((RunningServiceInfo)runningService.get(i)).service.getClassName().toString();
+        	String temp = ((ActivityManager.RunningServiceInfo)runningService.get(i)).service.getClassName().toString();
+        	//Log.e("qizhiqiang"," "+temp);
         	if (temp.equals("com.qi.carrecord.service.USBService")){
         		return true;
-        	}else{
-                continue;
         	}
         }
 
@@ -339,7 +342,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     }
     
     public void OpenBottomDialog() {
-        bottom_dialog = new Dialog(this, 0);
+        bottom_dialog = new Dialog(this, R.style.menu_dialog);
         bottom_dialog.setContentView(R.layout.dialog_bottom);
         Window window = bottom_dialog.getWindow();
         window.setGravity(0x51);

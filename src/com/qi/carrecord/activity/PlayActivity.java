@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -32,27 +33,27 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class PlayActivity extends Activity {
-    private Dialog MyDialog;
+    private Dialog MyDialog = null;
     private int bmpW;
-    private int currIndex;
-    private int currentPage;
+    private int currIndex = 0;
+    private int currentPage = 0;
     private ImageView cursor;
     private GridView gridview_tab1;
     private GridView gridview_tab2;
-    private boolean istab;
+    private boolean istab = true;
     private List<View> listViews;
     private ViewPager mPager;
-    private MediaDao mediadao;
-    private int offset;
+    private MediaDao mediadao = null;
+    private int offset = 0;
     private SimpleAdapter saImageItems1;
     private SimpleAdapter saImageItems2;
     private TextView t1;
     private TextView t2;
     private TextView t3;
-    private ArrayList<HashMap<String, Object>> tab1source;
-    private int tab2_currentPage;
-    private ArrayList<HashMap<String, Object>> tab2source;
-    private boolean tab_isadd;
+    private ArrayList<HashMap<String, Object>> tab1source = new ArrayList();
+    private int tab2_currentPage = 0;
+    private ArrayList<HashMap<String, Object>> tab2source = new ArrayList();
+    private boolean tab_isadd = true;
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class PlayActivity extends Activity {
         InitTextView();
         initTitle();
         InitViewPager();
-        //new PlayActivity.InitVideoAsyncTask(this).execute(new String[] {""});
+        new PlayActivity.InitVideoAsyncTask().execute(new String[] {""});
     }
     
     public void initTab1(ArrayList<HashMap<String, Object>> lstImageItem) {
@@ -261,6 +262,22 @@ public class PlayActivity extends Activity {
 		}
 
 
+    	
+    }
+    
+    public class InitVideoAsyncTask extends AsyncTask
+    {
+
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			// TODO Auto-generated method stub
+			if (false == tab_isadd){
+				if (!istab){
+					
+				}
+			}
+			return null;
+		}
     	
     }
     

@@ -40,7 +40,13 @@
         <item name="android:minHeight">8.0dip</item>
     </style>
 
-
+    <style name="MyDialog" parent="@style/base_dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimatio_menubottom</item>
+    </style>
+    <style name="DialogAnimatio_menubottom">
+        <item name="android:windowEnterAnimation">@anim/zoomin</item>
+        <item name="android:windowExitAnimation">@anim/zoomoff</item>
+    </style>    
     <style name="base_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -50,6 +56,12 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
- 
+    <style name="menu_dialog" parent="@style/base_dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimatio_menu</item>
+    </style>
+    <style name="DialogAnimatio_menu">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style> 
 
 </resources>

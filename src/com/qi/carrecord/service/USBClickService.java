@@ -26,7 +26,7 @@ public class USBClickService extends Service {
     private Dialog addDialog;
     private TextView content;
     private MediaPlayer mPlayer;
-    private int size;
+    private int size = 10;
     private TimerTask task;
     private Timer timer;
     private boolean usbstate;
@@ -53,6 +53,7 @@ public class USBClickService extends Service {
 			size = size -1;
 			content.setText(new StringBuilder(String.valueOf(size)).append("\u79d2\u540e\u81ea\u52a8\u6253\u5f00\u884c\u8f66\u8bb0\u5f55\u4eea..").toString());
 			if (size <= 0){
+				Log.e("qizhiqiang","USBClickService handler");
 				Intent intent = new Intent("android.intent.action.MAIN");
 				PackageManager pm = getPackageManager();
 				intent = pm.getLaunchIntentForPackage("com.qi.carrecord");
@@ -90,7 +91,7 @@ public class USBClickService extends Service {
                     addDialog.dismiss();
                     addDialog = null;
                 }
-                addDialog = new Dialog(getApplicationContext(),0);
+                addDialog = new Dialog(getApplicationContext(),R.style.MyDialog);
                 addDialog.setContentView(R.layout.dialog);
                 TextView title = (TextView)addDialog.findViewById(R.id.dialog_title);
                 content = (TextView)addDialog.findViewById(R.id.dialog_content);
@@ -131,6 +132,7 @@ public class USBClickService extends Service {
         if(usb.equals("close")) {
             usbstate = false;
             if(isTopActivity()) {
+                Log.e("qizhiqiang", "usbdisconnect");
                 Intent intent_close = new Intent();
                 intent_close.setAction("com.qi.carrecord.receiver.usbdisconnect");
                 sendBroadcast(intent_close);
